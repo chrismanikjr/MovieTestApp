@@ -10,22 +10,15 @@ import Combine
 
 class MovieImage: UIImageView{
     enum ImageStyle{
-        case small
-        case medium
-        case big
         case rating
     }
     
     public private(set) var styleImg: ImageStyle
     
 
-    private var cancellable: AnyCancellable?
-
-    struct Constants{
-        static let widthScreen = UIScreen.main.bounds.width
-        static let ratingSize: CGFloat = 20
-        static let smallSize: CGFloat = 40
-        static let mediumSize: CGFloat = 80
+   struct Constants{
+        static let ratingWidthSize: CGFloat = 25
+        static let ratingHeightSize: CGFloat = 20
         static let ratingImage = UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal)
     }
     init(styleImg: ImageStyle) {
@@ -41,16 +34,8 @@ class MovieImage: UIImageView{
     
     private func configureImage(){
         switch styleImg {
-        case .small:
-            self.setSize(width: Constants.smallSize, height: Constants.smallSize)
-
-        case .medium:
-            self.setSize(width: Constants.mediumSize, height: Constants.mediumSize * 1.5)
-
-        case .big:
-            self.setSize(width: Constants.widthScreen, height: Constants.widthScreen * 0.7)
         case .rating:
-            self.setSize(width: Constants.ratingSize + 5.0, height: Constants.ratingSize)
+            self.setSize(width: Constants.ratingWidthSize, height: Constants.ratingHeightSize)
             self.image = Constants.ratingImage
         }
     }

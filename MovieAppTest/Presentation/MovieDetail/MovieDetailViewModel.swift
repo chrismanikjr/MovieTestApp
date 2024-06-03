@@ -51,7 +51,7 @@ class MovieDetailViewModel{
             case .success(let response):
                 completion(response)
             case .failure(let failure):
-                self.showErrorMessage?(failure.localizedDescription)
+                self.showErrorMessage?(failure.descriptionString)
             }
         }
     }
@@ -62,7 +62,7 @@ class MovieDetailViewModel{
             case .success(let response):
                 completion(response.results)
             case .failure(let failure):
-                self.showErrorMessage?(failure.localizedDescription)
+                self.showErrorMessage?(failure.descriptionString)
             }
         }
     }
@@ -82,7 +82,7 @@ class MovieDetailViewModel{
                 self.totalReviewPage = response.totalPages
                 completion(response.results)
             case .failure(let failure):
-                self.showErrorMessage?(failure.localizedDescription)
+                self.showErrorMessage?(failure.descriptionString)
             }
         }
     }

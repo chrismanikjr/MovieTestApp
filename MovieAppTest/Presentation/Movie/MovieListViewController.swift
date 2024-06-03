@@ -26,6 +26,7 @@ class MovieListViewController: UIViewController {
         setupView()
         observerViewModel()
         if let genre = genre{
+            title = "\(genre.name)'s Movie"
             viewModel.genreId = genre.id
             viewModel.fetchMovieList()
         }
@@ -37,9 +38,20 @@ class MovieListViewController: UIViewController {
                 self?.configureDataSource()
             }
         }
+        viewModel.showErrorMessage = {[weak self] errorMessage in
+            self?.showErrorAlert(message: errorMessage)
+        }
+    }
+    
+    private func showErrorAlert(message: String){
+        DispatchQueue.main.async {
+            AlertHelper.present(title: "Error", actions: .close, message: message, from: self)
+        }
     }
     
     private func setupView(){
+        view.backgroundColor = .white
+        navigationItem.backButtonTitle = " "
         setupCollectionView()
         setupConstraint()
     }
@@ -107,6 +119,7 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = MovieDetailViewController()
         detailVC.movieId = viewModel.movies[indexPath.row].id
+        detailVC.movieName = viewModel.movies[indexPath.row].title
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     

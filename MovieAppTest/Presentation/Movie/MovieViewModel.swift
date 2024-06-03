@@ -34,7 +34,7 @@ class MovieViewModel: MovieListener{
             case .success(let response):
                 self.genres = response.genres
             case .failure(let failure):
-                self.showErrorMessage?(failure.localizedDescription)
+                self.showErrorMessage?(failure.descriptionString)
             }
         }
     }
@@ -52,7 +52,7 @@ class MovieViewModel: MovieListener{
                 self.totalPage = response.totalPages
                 self.movies.append(contentsOf: response.results)
             case .failure(let failure):
-                self.showErrorMessage?(failure.localizedDescription)
+                self.showErrorMessage?(failure.descriptionString)
             }
         }
     }

@@ -22,6 +22,11 @@ class MovieDetailViewController: UIViewController {
             detailVM.movieId = self.movieId ?? 0
         }
     }
+    var movieName: String?{
+        didSet{
+            title = movieName
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +41,18 @@ class MovieDetailViewController: UIViewController {
                 self?.configureDataSource()
             }
         }
+        detailVM.showErrorMessage = {[weak self] errorMessage in
+            self?.showErrorAlert(message: errorMessage)
+        }
+    }
+    private func showErrorAlert(message: String){
+        DispatchQueue.main.async {
+            AlertHelper.present(title: "Error", actions: .close, message: message, from: self)
+        }
     }
     
     private func setupView(){
+        view.backgroundColor = .white
         setupCollection()
         setupConstraint()
     }
@@ -52,8 +66,6 @@ class MovieDetailViewController: UIViewController {
         collectionView.register(cell: TrailerCollectionViewCell.self)
         collectionView.register(cell: ReviewCollectionViewCell.self)
         collectionView.register(header: TitleSupplementaryView.self)
-        collectionView.register(footer: FooterLoadingSupplementaryView.self)
-        
         
         collectionView.collectionViewLayout.invalidateLayout()
         detailCollection = collectionView

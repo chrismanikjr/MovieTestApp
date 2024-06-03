@@ -20,7 +20,7 @@ public enum NetworkError: Error{
     case encodingFailed
     case missingURL
     
-    var descriptionString: String?{
+    var descriptionString: String{
         switch self {
         case .authenticationError:
             return "Token Expired or Token Invalid"
